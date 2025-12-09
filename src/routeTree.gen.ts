@@ -19,6 +19,7 @@ import { Route as ProductsCreateRouteImport } from './routes/products/create'
 import { Route as BranchesCreateRouteImport } from './routes/branches/create'
 import { Route as ProductsEditIdRouteImport } from './routes/products/edit/$id'
 import { Route as BranchesEditIdRouteImport } from './routes/branches/edit/$id'
+import { Route as StockBranchIdProductIdSummaryRouteImport } from './routes/stock/$branchId/$productId/summary'
 
 const LayoutRoute = LayoutRouteImport.update({
   id: '/_layout',
@@ -69,6 +70,12 @@ const BranchesEditIdRoute = BranchesEditIdRouteImport.update({
   path: '/branches/edit/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StockBranchIdProductIdSummaryRoute =
+  StockBranchIdProductIdSummaryRouteImport.update({
+    id: '/stock/$branchId/$productId/summary',
+    path: '/stock/$branchId/$productId/summary',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -80,6 +87,7 @@ export interface FileRoutesByFullPath {
   '/stock': typeof StockIndexRoute
   '/branches/edit/$id': typeof BranchesEditIdRoute
   '/products/edit/$id': typeof ProductsEditIdRoute
+  '/stock/$branchId/$productId/summary': typeof StockBranchIdProductIdSummaryRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -91,6 +99,7 @@ export interface FileRoutesByTo {
   '/stock': typeof StockIndexRoute
   '/branches/edit/$id': typeof BranchesEditIdRoute
   '/products/edit/$id': typeof ProductsEditIdRoute
+  '/stock/$branchId/$productId/summary': typeof StockBranchIdProductIdSummaryRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -104,6 +113,7 @@ export interface FileRoutesById {
   '/stock/': typeof StockIndexRoute
   '/branches/edit/$id': typeof BranchesEditIdRoute
   '/products/edit/$id': typeof ProductsEditIdRoute
+  '/stock/$branchId/$productId/summary': typeof StockBranchIdProductIdSummaryRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -117,6 +127,7 @@ export interface FileRouteTypes {
     | '/stock'
     | '/branches/edit/$id'
     | '/products/edit/$id'
+    | '/stock/$branchId/$productId/summary'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -128,6 +139,7 @@ export interface FileRouteTypes {
     | '/stock'
     | '/branches/edit/$id'
     | '/products/edit/$id'
+    | '/stock/$branchId/$productId/summary'
   id:
     | '__root__'
     | '/'
@@ -140,6 +152,7 @@ export interface FileRouteTypes {
     | '/stock/'
     | '/branches/edit/$id'
     | '/products/edit/$id'
+    | '/stock/$branchId/$productId/summary'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -153,6 +166,7 @@ export interface RootRouteChildren {
   StockIndexRoute: typeof StockIndexRoute
   BranchesEditIdRoute: typeof BranchesEditIdRoute
   ProductsEditIdRoute: typeof ProductsEditIdRoute
+  StockBranchIdProductIdSummaryRoute: typeof StockBranchIdProductIdSummaryRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -227,6 +241,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BranchesEditIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/stock/$branchId/$productId/summary': {
+      id: '/stock/$branchId/$productId/summary'
+      path: '/stock/$branchId/$productId/summary'
+      fullPath: '/stock/$branchId/$productId/summary'
+      preLoaderRoute: typeof StockBranchIdProductIdSummaryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -241,6 +262,7 @@ const rootRouteChildren: RootRouteChildren = {
   StockIndexRoute: StockIndexRoute,
   BranchesEditIdRoute: BranchesEditIdRoute,
   ProductsEditIdRoute: ProductsEditIdRoute,
+  StockBranchIdProductIdSummaryRoute: StockBranchIdProductIdSummaryRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

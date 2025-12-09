@@ -9,7 +9,9 @@ import {
   LogOut,
   Package,
   Layers,
+  TriangleAlert,
 } from "lucide-react"
+import { useStockAlerts } from "../hooks/useStockAlerts"
 
 interface AdminLayoutProps {
   children: ReactNode
@@ -18,6 +20,7 @@ interface AdminLayoutProps {
 export default function AdminLayout({ children }: AdminLayoutProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const location = useLocation()
+  const { data: alerts = [] } = useStockAlerts()
 
   const isActive = (path: string) => {
     return (
@@ -78,6 +81,9 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                     className={`w-5 h-5 mr-3 ${active ? "text-white" : "text-gray-400"}`}
                   />
                   <span className="font-medium">{item.name}</span>
+                  {item.name === "Stock" && alerts.length > 0 && (
+                    <TriangleAlert className="w-4 h-4 text-white ml-auto" />
+                  )}
                 </Link>
               )
             })}

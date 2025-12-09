@@ -25,3 +25,8 @@ export const deductStock = async (data: {
   const response = await axios.post(`${BASE_URL}/deduct`, data)
   return response.data
 }
+
+export const getStockAlerts = async () => {
+  const { data } = await axios.get(`${BASE_URL}/lowstockalerts`)
+  return data
+}

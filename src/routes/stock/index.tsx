@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router"
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router"
 import { useState } from "react"
 import {
   Plus,
@@ -12,8 +12,10 @@ import {
   FileText,
   X,
   AlertCircle,
+  TriangleAlert
 } from "lucide-react"
 import { useDeductStock, useStock } from "../../hooks/useStock"
+import { useStockAlerts } from "../../hooks/useStockAlerts"
 
 export const Route = createFileRoute("/stock/")({
   component: StockListPage,
@@ -22,6 +24,7 @@ export const Route = createFileRoute("/stock/")({
 function StockListPage() {
   const [searchTerm, setSearchTerm] = useState("")
   const { data: stock = [], isLoading, error } = useStock()
+  const { data: alerts = [] } = useStockAlerts()
   const deductStock = useDeductStock()
 
   // Deduct Modal State
@@ -80,8 +83,10 @@ function StockListPage() {
     }
   }
 
-  const handleSummaryClick = (stockId: number) => {
-    console.log("View Summary clicked", stockId)
+  const navigate = useNavigate()
+
+  const handleSummaryClick = (branchId: number, productId: number) => {
+    navigate({ to: `/stock/${branchId}/${productId}/summary` })
   }
 
   if (isLoading) return <div>Loading stock...</div>
@@ -208,6 +213,59 @@ function StockListPage() {
           Add Stock
         </Link>
       </div>
+
+      {/* Low Stock Alerts */}
+      {alerts.length > 0 && (
+        <div className="bg-white rounded-xl shadow-sm border border-orange-200 overflow-hidden">
+          <div className="bg-orange-50 px-6 py-4 border-b border-orange-100 flex items-center">
+            <TriangleAlert className="w-5 h-5 text-orange-600 mr-2" />
+            <h3 className="text-lg font-bold text-orange-800">
+              Low Stock Alerts
+            </h3>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Branch
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Product
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Quantity
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {alerts.map((alert: any) => (
+                  <tr key={alert.id} className="hover:bg-gray-50">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {alert.branch.name}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {alert.product.name}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-red-600">
+                      {alert.quantity}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
 
       {/* Search Bar */}
       <div className="relative max-w-md">
@@ -343,7 +401,9 @@ function StockListPage() {
                           Deduct
                         </button>
                         <button
-                          onClick={() => handleSummaryClick(item.id)}
+                          onClick={() =>
+                            handleSummaryClick(item.branch.id, item.product.id)
+                          }
                           className="inline-flex items-center px-3 py-1.5 border border-gray-200 text-gray-600 rounded-md text-xs font-medium hover:bg-gray-50 transition-colors"
                         >
                           <FileText className="h-3 w-3 mr-1" />
@@ -402,7 +462,9 @@ function StockListPage() {
                     Deduct
                   </button>
                   <button
-                    onClick={() => handleSummaryClick(item.id)}
+                    onClick={() =>
+                      handleSummaryClick(item.branch.id, item.product.id)
+                    }
                     className="flex-1 flex items-center justify-center px-3 py-2 border border-gray-200 text-gray-600 rounded-md text-sm font-medium hover:bg-gray-50 transition-colors"
                   >
                     <FileText className="h-4 w-4 mr-2" />
