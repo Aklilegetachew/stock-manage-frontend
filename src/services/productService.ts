@@ -1,14 +1,12 @@
-import axios from "axios"
-
-const BASE_URL = "http://localhost:8000/products"
+import api from "./api"
 
 export const getProducts = async () => {
-  const { data } = await axios.get(BASE_URL)
+  const { data } = await api.get("/products")
   return data
 }
 
 export const getProduct = async (id: number) => {
-  const { data } = await axios.get(`${BASE_URL}/${id}`)
+  const { data } = await api.get(`/products/${id}`)
   return data
 }
 
@@ -17,7 +15,7 @@ export const createProduct = async (product: {
   type: string
   size: string
 }) => {
-  const { data } = await axios.post(BASE_URL, product)
+  const { data } = await api.post("/products", product)
   return data
 }
 
@@ -25,11 +23,11 @@ export const updateProduct = async (
   id: number,
   product: { name: string; type: string; size: string }
 ) => {
-  const { data } = await axios.put(`${BASE_URL}/${id}`, product)
+  const { data } = await api.put(`/products/${id}`, product)
   return data
 }
 
 export const deleteProduct = async (id: number) => {
-  const { data } = await axios.delete(`${BASE_URL}/${id}`)
+  const { data } = await api.delete(`/products/${id}`)
   return data
 }

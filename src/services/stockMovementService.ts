@@ -1,6 +1,4 @@
-import axios from "axios"
-
-const BASE_URL = "http://localhost:8000/stock"
+import api from "./api";
 
 export interface StockItem {
   id: number
@@ -33,8 +31,8 @@ export const getStockMovements = async (
   branchId: number,
   productId: number
 ): Promise<StockMovement[]> => {
-  const response = await axios.get(
-    `${BASE_URL}/${branchId}/${productId}/movements`
+  const response = await api.get(
+    `/stock/${branchId}/${productId}/movements`
   )
   return response.data
 }
