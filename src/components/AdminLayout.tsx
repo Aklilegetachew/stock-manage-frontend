@@ -10,6 +10,8 @@ import {
   Package,
   Layers,
   TriangleAlert,
+  Truck,
+  FileText,
 } from "lucide-react"
 import { useStockAlerts } from "../hooks/useStockAlerts"
 
@@ -33,6 +35,8 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     { name: "Branches", path: "/branches", icon: MapPin },
     { name: "Products", path: "/products", icon: Package },
     { name: "Stock", path: "/stock", icon: Layers },
+    { name: "Deliveries", path: "/deliveries", icon: Truck },
+    { name: "Reports", path: "/reports/stock-movement", icon: FileText },
   ]
 
   return (
@@ -91,7 +95,14 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
           {/* Sidebar Footer */}
           <div className="p-4 border-t border-gray-800">
-            <button className="flex items-center w-full px-3 py-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-md transition-colors">
+            <button
+              onClick={() => {
+                localStorage.removeItem("accessToken")
+                localStorage.removeItem("stockAdmin")
+                window.location.href = "/login"
+              }}
+              className="flex items-center w-full px-3 py-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-md transition-colors"
+            >
               <LogOut className="w-5 h-5 mr-3" />
               <span>Sign Out</span>
             </button>

@@ -9,18 +9,28 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as StockIndexRouteImport } from './routes/stock/index'
 import { Route as ProductsIndexRouteImport } from './routes/products/index'
+import { Route as DeliveriesIndexRouteImport } from './routes/deliveries/index'
 import { Route as BranchesIndexRouteImport } from './routes/branches/index'
 import { Route as StockAddRouteImport } from './routes/stock/add'
+import { Route as ReportsStockMovementRouteImport } from './routes/reports/stock-movement'
 import { Route as ProductsCreateRouteImport } from './routes/products/create'
+import { Route as DeliveriesInTransitRouteImport } from './routes/deliveries/in-transit'
+import { Route as DeliveriesCompletedRouteImport } from './routes/deliveries/completed'
 import { Route as BranchesCreateRouteImport } from './routes/branches/create'
 import { Route as ProductsEditIdRouteImport } from './routes/products/edit/$id'
 import { Route as BranchesEditIdRouteImport } from './routes/branches/edit/$id'
 import { Route as StockBranchIdProductIdSummaryRouteImport } from './routes/stock/$branchId/$productId/summary'
 
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LayoutRoute = LayoutRouteImport.update({
   id: '/_layout',
   getParentRoute: () => rootRouteImport,
@@ -40,6 +50,11 @@ const ProductsIndexRoute = ProductsIndexRouteImport.update({
   path: '/products/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DeliveriesIndexRoute = DeliveriesIndexRouteImport.update({
+  id: '/deliveries/',
+  path: '/deliveries/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BranchesIndexRoute = BranchesIndexRouteImport.update({
   id: '/branches/',
   path: '/branches/',
@@ -50,9 +65,24 @@ const StockAddRoute = StockAddRouteImport.update({
   path: '/stock/add',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReportsStockMovementRoute = ReportsStockMovementRouteImport.update({
+  id: '/reports/stock-movement',
+  path: '/reports/stock-movement',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProductsCreateRoute = ProductsCreateRouteImport.update({
   id: '/products/create',
   path: '/products/create',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DeliveriesInTransitRoute = DeliveriesInTransitRouteImport.update({
+  id: '/deliveries/in-transit',
+  path: '/deliveries/in-transit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DeliveriesCompletedRoute = DeliveriesCompletedRouteImport.update({
+  id: '/deliveries/completed',
+  path: '/deliveries/completed',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BranchesCreateRoute = BranchesCreateRouteImport.update({
@@ -79,10 +109,15 @@ const StockBranchIdProductIdSummaryRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
   '/branches/create': typeof BranchesCreateRoute
+  '/deliveries/completed': typeof DeliveriesCompletedRoute
+  '/deliveries/in-transit': typeof DeliveriesInTransitRoute
   '/products/create': typeof ProductsCreateRoute
+  '/reports/stock-movement': typeof ReportsStockMovementRoute
   '/stock/add': typeof StockAddRoute
   '/branches': typeof BranchesIndexRoute
+  '/deliveries': typeof DeliveriesIndexRoute
   '/products': typeof ProductsIndexRoute
   '/stock': typeof StockIndexRoute
   '/branches/edit/$id': typeof BranchesEditIdRoute
@@ -91,10 +126,15 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
   '/branches/create': typeof BranchesCreateRoute
+  '/deliveries/completed': typeof DeliveriesCompletedRoute
+  '/deliveries/in-transit': typeof DeliveriesInTransitRoute
   '/products/create': typeof ProductsCreateRoute
+  '/reports/stock-movement': typeof ReportsStockMovementRoute
   '/stock/add': typeof StockAddRoute
   '/branches': typeof BranchesIndexRoute
+  '/deliveries': typeof DeliveriesIndexRoute
   '/products': typeof ProductsIndexRoute
   '/stock': typeof StockIndexRoute
   '/branches/edit/$id': typeof BranchesEditIdRoute
@@ -105,10 +145,15 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_layout': typeof LayoutRoute
+  '/login': typeof LoginRoute
   '/branches/create': typeof BranchesCreateRoute
+  '/deliveries/completed': typeof DeliveriesCompletedRoute
+  '/deliveries/in-transit': typeof DeliveriesInTransitRoute
   '/products/create': typeof ProductsCreateRoute
+  '/reports/stock-movement': typeof ReportsStockMovementRoute
   '/stock/add': typeof StockAddRoute
   '/branches/': typeof BranchesIndexRoute
+  '/deliveries/': typeof DeliveriesIndexRoute
   '/products/': typeof ProductsIndexRoute
   '/stock/': typeof StockIndexRoute
   '/branches/edit/$id': typeof BranchesEditIdRoute
@@ -119,10 +164,15 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/login'
     | '/branches/create'
+    | '/deliveries/completed'
+    | '/deliveries/in-transit'
     | '/products/create'
+    | '/reports/stock-movement'
     | '/stock/add'
     | '/branches'
+    | '/deliveries'
     | '/products'
     | '/stock'
     | '/branches/edit/$id'
@@ -131,10 +181,15 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/login'
     | '/branches/create'
+    | '/deliveries/completed'
+    | '/deliveries/in-transit'
     | '/products/create'
+    | '/reports/stock-movement'
     | '/stock/add'
     | '/branches'
+    | '/deliveries'
     | '/products'
     | '/stock'
     | '/branches/edit/$id'
@@ -144,10 +199,15 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_layout'
+    | '/login'
     | '/branches/create'
+    | '/deliveries/completed'
+    | '/deliveries/in-transit'
     | '/products/create'
+    | '/reports/stock-movement'
     | '/stock/add'
     | '/branches/'
+    | '/deliveries/'
     | '/products/'
     | '/stock/'
     | '/branches/edit/$id'
@@ -158,10 +218,15 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LayoutRoute: typeof LayoutRoute
+  LoginRoute: typeof LoginRoute
   BranchesCreateRoute: typeof BranchesCreateRoute
+  DeliveriesCompletedRoute: typeof DeliveriesCompletedRoute
+  DeliveriesInTransitRoute: typeof DeliveriesInTransitRoute
   ProductsCreateRoute: typeof ProductsCreateRoute
+  ReportsStockMovementRoute: typeof ReportsStockMovementRoute
   StockAddRoute: typeof StockAddRoute
   BranchesIndexRoute: typeof BranchesIndexRoute
+  DeliveriesIndexRoute: typeof DeliveriesIndexRoute
   ProductsIndexRoute: typeof ProductsIndexRoute
   StockIndexRoute: typeof StockIndexRoute
   BranchesEditIdRoute: typeof BranchesEditIdRoute
@@ -171,6 +236,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_layout': {
       id: '/_layout'
       path: ''
@@ -199,6 +271,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/deliveries/': {
+      id: '/deliveries/'
+      path: '/deliveries'
+      fullPath: '/deliveries'
+      preLoaderRoute: typeof DeliveriesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/branches/': {
       id: '/branches/'
       path: '/branches'
@@ -213,11 +292,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StockAddRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reports/stock-movement': {
+      id: '/reports/stock-movement'
+      path: '/reports/stock-movement'
+      fullPath: '/reports/stock-movement'
+      preLoaderRoute: typeof ReportsStockMovementRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/products/create': {
       id: '/products/create'
       path: '/products/create'
       fullPath: '/products/create'
       preLoaderRoute: typeof ProductsCreateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/deliveries/in-transit': {
+      id: '/deliveries/in-transit'
+      path: '/deliveries/in-transit'
+      fullPath: '/deliveries/in-transit'
+      preLoaderRoute: typeof DeliveriesInTransitRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/deliveries/completed': {
+      id: '/deliveries/completed'
+      path: '/deliveries/completed'
+      fullPath: '/deliveries/completed'
+      preLoaderRoute: typeof DeliveriesCompletedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/branches/create': {
@@ -254,10 +354,15 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LayoutRoute: LayoutRoute,
+  LoginRoute: LoginRoute,
   BranchesCreateRoute: BranchesCreateRoute,
+  DeliveriesCompletedRoute: DeliveriesCompletedRoute,
+  DeliveriesInTransitRoute: DeliveriesInTransitRoute,
   ProductsCreateRoute: ProductsCreateRoute,
+  ReportsStockMovementRoute: ReportsStockMovementRoute,
   StockAddRoute: StockAddRoute,
   BranchesIndexRoute: BranchesIndexRoute,
+  DeliveriesIndexRoute: DeliveriesIndexRoute,
   ProductsIndexRoute: ProductsIndexRoute,
   StockIndexRoute: StockIndexRoute,
   BranchesEditIdRoute: BranchesEditIdRoute,
